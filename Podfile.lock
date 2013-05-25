@@ -1,0 +1,10 @@
+PODS:
+  - PPRevealSideViewController (1.0.1)
+
+DEPENDENCIES:
+  - PPRevealSideViewController (~> 1.0.1)
+
+SPEC CHECKSUMS:
+  PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
+
+COCOAPODS: 0.19.1
