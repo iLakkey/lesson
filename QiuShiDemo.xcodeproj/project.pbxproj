@@ -117,6 +117,8 @@
 		56AC09A8174C945900DF25BC /* top_tab_background3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56AC0949174C945900DF25BC /* top_tab_background3@2x.png */; };
 		56AC09AB174C975A00DF25BC /* MenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AC09AA174C975A00DF25BC /* MenuVC.m */; };
 		56AC09AE174C989400DF25BC /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AC09AD174C989300DF25BC /* MainVC.m */; };
+		56E5F6B21750DA7100BA2376 /* QiuShi.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E5F6B11750DA7100BA2376 /* QiuShi.m */; };
+		56EF1AE61752169E00B5E1A8 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 56EF1AE51752169E00B5E1A8 /* Comment.m */; };
 		DCF32B4788F64380839B5541 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7087D3DEF4DA41C38D2BA3CD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -238,6 +240,10 @@
 		56AC09AA174C975A00DF25BC /* MenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuVC.m; sourceTree = "<group>"; };
 		56AC09AC174C989300DF25BC /* MainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainVC.h; sourceTree = "<group>"; };
 		56AC09AD174C989300DF25BC /* MainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
+		56E5F6B01750DA7100BA2376 /* QiuShi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiuShi.h; sourceTree = "<group>"; };
+		56E5F6B11750DA7100BA2376 /* QiuShi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiuShi.m; sourceTree = "<group>"; };
+		56EF1AE41752169E00B5E1A8 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		56EF1AE51752169E00B5E1A8 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		7087D3DEF4DA41C38D2BA3CD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8F0836D649460AAEE2B5BE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -354,6 +360,10 @@
 		56AC08EA174C945900DF25BC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				56E5F6B01750DA7100BA2376 /* QiuShi.h */,
+				56E5F6B11750DA7100BA2376 /* QiuShi.m */,
+				56EF1AE41752169E00B5E1A8 /* Comment.h */,
+				56EF1AE51752169E00B5E1A8 /* Comment.m */,
 			);
 			name = Models;
 			path = QiuShiDemo/Models;
@@ -684,6 +694,8 @@
 				56AC09AB174C975A00DF25BC /* MenuVC.m in Sources */,
 				56AC09AE174C989400DF25BC /* MainVC.m in Sources */,
 				5656E42A174DEB8A001C568E /* PullingRefreshTableView.m in Sources */,
+				56E5F6B21750DA7100BA2376 /* QiuShi.m in Sources */,
+				56EF1AE61752169E00B5E1A8 /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

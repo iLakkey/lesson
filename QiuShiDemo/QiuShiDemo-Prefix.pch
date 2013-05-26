@@ -12,3 +12,24 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+// 嫩草
+#define LastestURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/latest?count=%d&page=%d",count,page]
+// 有图有真相
+#define ImageURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/images?count=%d&page=%d",count,page]
+// 穿越
+#define SuggestURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/suggest?count=%d&page=%d",count,page]
+// 精华－每天
+#define DayURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/day?count=%d&page=%d",count,page]
+// 精华－每周
+#define WeakURlString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/week?count=%d&page=%d",count,page]
+// 精华－每月
+#define MonthURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/month?count=%d&page=%d",count,page]
+// 评论
+#define CommentsURLString(ID) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/%@/comments?count=500&page=1",ID]
+
+// 小图的URL
+#define SmallImageURLString(id, imageURL) [NSString stringWithFormat:@"http://img.qiushibaike.com/system/pictures/%@/small/%@", id, imageURL]
+// 中图的URL
+#define MidiumImageURLString(id, imageURL) [NSString stringWithFormat:@"http://img.qiushibaike.com/system/pictures/%@/medium/%@", id, imageURL]
+
