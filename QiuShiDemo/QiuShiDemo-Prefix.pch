@@ -12,6 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "PPRevealSideViewController.h"
+    #import "ASIHttpRequest.h"
+    #import "ASIDownloadCache.h"
 #endif
 
 

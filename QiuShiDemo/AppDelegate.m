@@ -25,6 +25,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    // 为所有的ASIHTTPRequest设定相同的默认缓存位置
+    // 默认的缓存策略为：ASIAskServerIfModifiedWhenStaleCachePolicy
+    // 默认的缓存周期为：ASICacheForSessionDurationCacheStoragePolicy
+    [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
+    
     // 设置初始的糗事类型
     self.qsType = QiuShiTypeNew;
     
@@ -32,7 +37,7 @@
     MenuVC* leftVC = [[[MenuVC alloc] init] autorelease];
     MainVC* mainVC = [[[MainVC alloc] init] autorelease];
     UINavigationController* centerVC = [[[UINavigationController alloc] initWithRootViewController:mainVC] autorelease];
-    PPRevealSideViewController* rsViewController = [[PPRevealSideViewController alloc] initWithRootViewController:centerVC];
+    PPRevealSideViewController* rsViewController = [[[PPRevealSideViewController alloc] initWithRootViewController:centerVC] autorelease];
     // 预加载MenuVC为PPRevealSideViewController的左侧视图控制器
     [rsViewController preloadViewController:leftVC forSide:PPRevealSideDirectionLeft];
     // 设置左侧可滑动

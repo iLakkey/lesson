@@ -27,7 +27,7 @@
         self.strTag = [dic objectForKey:@"tag"];
         self.strId = [dic objectForKey:@"id"];
         self.strContent = [dic objectForKey:@"content"];
-        self.publishTime = [[dic objectForKey:@"published_at"] doubleValue];\
+        self.publishTime = [[dic objectForKey:@"published_at"] doubleValue];
         
         id image = [dic objectForKey:@"image"];
         if ((NSNull* )image != [NSNull null]) {

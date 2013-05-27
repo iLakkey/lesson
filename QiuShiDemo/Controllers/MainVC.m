@@ -8,6 +8,8 @@
 
 #import "MainVC.h"
 #import "PullingRefreshTableView.h"
+#import "AppDelegate.h"
+#import "QiuShi.h"
 
 
 #define PAGECOUNT 20    // 一次加载的最大数据量
@@ -17,11 +19,21 @@
 @property (nonatomic, assign) PullingRefreshTableView* refreshView;
 @property (nonatomic, assign) NSInteger         nPage;
 @property (nonatomic, strong) NSMutableArray*   arrDataSource;
-@property (nonatomic, assign) BOOL              bIsRefreshing;
+@property (nonatomic, assign) BOOL              bIsRefreshing; // 是否在refresh状态？
+
+@property (nonatomic, strong) ASIHTTPRequest*   asiRequest;
 
 @end
 
 @implementation MainVC
+
+- (void)dealloc {
+    self.arrDataSource = nil;
+    self.asiRequest = nil;
+    
+    [super dealloc];
+}
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -36,13 +48,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.arrDataSource = [NSMutableArray arrayWithObjects:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59", @"60", @"61", @"62", @"63", @"64", @"65", @"66", @"67", @"68", @"69", @"70", @"71", @"72", @"73", @"74", @"75", @"76", @"77", @"78", @"79", @"80", @"81", @"82", @"83", @"84", @"85", @"86", @"87", @"88", @"89", @"90", @"91", @"92", @"93", @"94", @"95", @"96", @"97", @"98", @"99", @"100", nil];
+    //
+    self.arrDataSource = [[[NSMutableArray alloc] initWithCapacity:40] autorelease];
     
     // 将视图控制器的默认主视图替换为PullingRefreshTableView
     _refreshView = [[[PullingRefreshTableView alloc] initWithFrame:self.view.frame pullingDelegate:self] autorelease];
     self.tableView = _refreshView;
-    [_refreshView launchRefreshing];
+    _refreshView.delegate = self;
+    _refreshView.dataSource = self;
+    
+    // 第一次进入刷新数据
+    if (self.nPage == 0) {
+        [_refreshView launchRefreshing];
+    }
 }
 
 
@@ -61,7 +79,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _nPage;
+    return [_arrDataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +91,9 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    cell.textLabel.text = [_arrDataSource objectAtIndex:indexPath.row];
+    QiuShi* qs = [_arrDataSource objectAtIndex:indexPath.row];
+//    NSLog(@"qs in cell = %@", [qs description]);
+    cell.textLabel.text = qs.strAuthor;
     
     return cell;
 }
@@ -151,17 +171,109 @@
 #pragma mark - PullingRefreshTableView Delegate
 // 下拉时回调的方法
 - (void)pullingTableViewDidStartRefreshing:(PullingRefreshTableView *)tableView {
-    [self performSelector:@selector(refreshData) withObject:nil afterDelay:0.1];
+    _bIsRefreshing = YES;
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0.1];
 }
 
 
 // 上拉时的回调方法
 - (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView {
-    [self performSelector:@selector(loadMoveData) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0.1];
 }
 
 
 #pragma mark - Private Method
+
+- (QiuShiType)currentQiuShiType {
+    return ((AppDelegate* )[UIApplication sharedApplication].delegate).qsType;
+}
+
+
+- (void)loadData {
+    self.nPage++;
+    if (_nPage > 20) {
+        [_refreshView tableViewDidFinishedLoadingWithMessage:@"下面木有了.."];
+        _refreshView.reachedTheEnd = YES;
+        return;
+    }
+    _refreshView.reachedTheEnd = NO;
+    
+    NSURL* url = nil;
+
+    switch ([self currentQiuShiType]) {
+        case QiuShiTypeTop: // 干货
+            break;
+            
+        case QiuShiTypeNew: // 嫩草
+            url = [NSURL URLWithString:LastestURLString(10, _nPage)];
+            break;
+            
+        case QiuShiTypePhoto: // 有图有真相
+            url = [NSURL URLWithString:ImageURLString(10, _nPage)];
+            break;
+            
+        case QiuShiTimeDay: // 精华－每天
+            url = [NSURL URLWithString:DayURLString(10, _nPage)];
+            break;
+            
+        case QiuShiTimeWeek: // 精华－每周
+            url = [NSURL URLWithString:WeakURlString(10, _nPage)];
+            break;
+            
+        case QiuShiTimeMonth: // 精华－每月
+            url = [NSURL URLWithString:MonthURLString(10, _nPage)];
+            break;
+            
+        case QiuShiTimeRandom: // 穿越
+            url = [NSURL URLWithString:SuggestURLString(10, _nPage)];
+            break;
+            
+        default:
+            break;
+    }
+    
+    // 发起网络请求
+    if (url == nil) {
+        return;
+    }
+    
+    self.asiRequest = [ASIHTTPRequest requestWithURL:url];
+    [_asiRequest setCompletionBlock:^{
+        if (_bIsRefreshing) {
+            _nPage = 1; // 重置page为1
+            [_arrDataSource removeAllObjects]; // 清空所有数组元素
+            _bIsRefreshing = NO;
+        }
+        
+        NSError* error = nil;
+        NSData* data = [_asiRequest responseData];
+        NSDictionary* dicData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if (error) {
+            NSLog(@"JSON parser error: %@", [error localizedDescription]);
+            return;
+        }
+        
+        NSArray* arrList = nil;
+        if ((arrList = [dicData objectForKey:@"items"])) {
+            for (NSDictionary* dicQiuShi in arrList) {
+                QiuShi* qs = [[[QiuShi alloc] initWithDictionary:dicQiuShi] autorelease];
+                [_arrDataSource addObject:qs];
+//                NSLog(@"qs = %@", [qs description]);
+            }
+        }
+        
+        //
+        [_refreshView tableViewDidFinishedLoading];
+        [_refreshView reloadData];
+    }];
+    
+    [_asiRequest setFailedBlock:^{
+        
+    }];
+    
+    [_asiRequest startAsynchronous];
+}
+
 
 - (void)refreshData {
     _nPage = MIN([_arrDataSource count], PAGECOUNT);
