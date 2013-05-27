@@ -11,7 +11,21 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "PPRevealSideViewController.h"
 #endif
+
+
+typedef enum
+{
+    QiuShiTypeTop,      // 干货
+    QiuShiTypeNew,      // 嫩草
+    QiuShiTypePhoto,    // 有图有真相
+    QiuShiTimeDay,      // 精华－每天
+    QiuShiTimeWeek,     // 精华－每周
+    QiuShiTimeMonth,    // 精华－每月
+    QiuShiTimeRandom,   // 穿越
+}QiuShiType;
+
 
 // 嫩草
 #define LastestURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/latest?count=%d&page=%d",count,page]
@@ -25,6 +39,7 @@
 #define WeakURlString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/week?count=%d&page=%d",count,page]
 // 精华－每月
 #define MonthURLString(count,page) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/month?count=%d&page=%d",count,page]
+
 // 评论
 #define CommentsURLString(ID) [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/%@/comments?count=500&page=1",ID]
 

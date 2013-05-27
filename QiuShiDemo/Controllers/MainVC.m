@@ -15,8 +15,9 @@
 @interface MainVC () <PullingRefreshTableViewDelegate>
 
 @property (nonatomic, assign) PullingRefreshTableView* refreshView;
-@property (nonatomic, assign) NSInteger         nLoadedCount;
+@property (nonatomic, assign) NSInteger         nPage;
 @property (nonatomic, strong) NSMutableArray*   arrDataSource;
+@property (nonatomic, assign) BOOL              bIsRefreshing;
 
 @end
 
@@ -60,7 +61,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _nLoadedCount;
+    return _nPage;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,8 +164,8 @@
 #pragma mark - Private Method
 
 - (void)refreshData {
-    _nLoadedCount = MIN([_arrDataSource count], PAGECOUNT);
-    if (_nLoadedCount == [_arrDataSource count]) {
+    _nPage = MIN([_arrDataSource count], PAGECOUNT);
+    if (_nPage == [_arrDataSource count]) {
         _refreshView.reachedTheEnd = YES;
         [_refreshView tableViewDidFinishedLoading];
         return;
@@ -178,11 +179,11 @@
 
 - (void)loadMoveData {
     NSInteger nAllDataCount = [_arrDataSource count];
-    // 检查nLoadedCount是否小于arrDataSource中的元素个数
+    // 检查nPage是否小于arrDataSource中的元素个数
     // *是，加载
-    if (_nLoadedCount < nAllDataCount) {
-        if ((_nLoadedCount += PAGECOUNT) > nAllDataCount) {
-            _nLoadedCount = nAllDataCount;
+    if (_nPage < nAllDataCount) {
+        if ((_nPage += PAGECOUNT) > nAllDataCount) {
+            _nPage = nAllDataCount;
             [_refreshView tableViewDidFinishedLoadingWithMessage:@"下面米有了"];
             _refreshView.reachedTheEnd = YES; // 设置数据到头标示
             [_refreshView reloadData]; // 重新显示数据

@@ -9,9 +9,8 @@
 #import "AppDelegate.h"
 #import "MainVC.h"
 #import "MenuVC.h"
-#import "PPRevealSideViewController.h"
 
-//
+
 @implementation AppDelegate
 
 - (void)dealloc
@@ -25,6 +24,9 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    // 设置初始的糗事类型
+    self.qsType = QiuShiTypeNew;
     
     // 初始化PPRevealSideViewController，并使用MenuVC、MainVC对象进行设置
     MenuVC* leftVC = [[[MenuVC alloc] init] autorelease];
