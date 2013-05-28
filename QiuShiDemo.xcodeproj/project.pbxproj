@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		562D2C4A17538A45003519A2 /* Ultilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D2C4917538A45003519A2 /* Ultilities.m */; };
 		5656E425174DEB8A001C568E /* arrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E41E174DEB8A001C568E /* arrowDown.png */; };
 		5656E426174DEB8A001C568E /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E41F174DEB8A001C568E /* arrowDown@2x.png */; };
 		5656E427174DEB8A001C568E /* arrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E420174DEB8A001C568E /* arrowUp.png */; };
@@ -123,6 +124,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		562D2C4817538A45003519A2 /* Ultilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ultilities.h; sourceTree = "<group>"; };
+		562D2C4917538A45003519A2 /* Ultilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ultilities.m; sourceTree = "<group>"; };
 		5656E41E174DEB8A001C568E /* arrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowDown.png; sourceTree = "<group>"; };
 		5656E41F174DEB8A001C568E /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
 		5656E420174DEB8A001C568E /* arrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowUp.png; sourceTree = "<group>"; };
@@ -481,6 +484,8 @@
 		56AC094A174C945900DF25BC /* Ultilities */ = {
 			isa = PBXGroup;
 			children = (
+				562D2C4817538A45003519A2 /* Ultilities.h */,
+				562D2C4917538A45003519A2 /* Ultilities.m */,
 			);
 			name = Ultilities;
 			path = QiuShiDemo/Ultilities;
@@ -696,6 +701,7 @@
 				5656E42A174DEB8A001C568E /* PullingRefreshTableView.m in Sources */,
 				56E5F6B21750DA7100BA2376 /* QiuShi.m in Sources */,
 				56EF1AE61752169E00B5E1A8 /* Comment.m in Sources */,
+				562D2C4A17538A45003519A2 /* Ultilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

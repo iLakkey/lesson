@@ -238,6 +238,7 @@
     }
     
     self.asiRequest = [ASIHTTPRequest requestWithURL:url];
+    // 网络请求成功的回调
     [_asiRequest setCompletionBlock:^{
         if (_bIsRefreshing) {
             _nPage = 1; // 重置page为1
@@ -267,10 +268,14 @@
         [_refreshView reloadData];
     }];
     
+    // 由于网络问题，失败后的回调
     [_asiRequest setFailedBlock:^{
-        
+        _bIsRefreshing = NO;
+        [_refreshView tableViewDidFinishedLoading];
+        [Ultilities showMessage:@"连接网络失败，请检查网络是否可用"];
     }];
     
+    // 开始异步请求
     [_asiRequest startAsynchronous];
 }
 
