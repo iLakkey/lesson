@@ -63,7 +63,7 @@
         _arrow.frame = CGRectMake(0, 0, 20, 20);
         _arrow.contentsGravity = kCAGravityResizeAspect;
       
-        _arrow.contents = (id)[UIImage imageWithCGImage:[UIImage imageNamed:@"blueArrow.png"].CGImage scale:1 orientation:UIImageOrientationDown].CGImage;
+        _arrow.contents = (id)[UIImage imageWithCGImage:([UIImage imageNamed:@"blueArrow.png"].CGImage) scale:1 orientation:UIImageOrientationDown].CGImage;
 
         [self.layer addSublayer:_arrow];
         

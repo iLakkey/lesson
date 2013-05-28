@@ -10,6 +10,7 @@
 #import "PullingRefreshTableView.h"
 #import "AppDelegate.h"
 #import "QiuShi.h"
+#import "ContentCell.h"
 
 
 #define PAGECOUNT 20    // 一次加载的最大数据量
@@ -48,14 +49,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //
     self.arrDataSource = [[[NSMutableArray alloc] initWithCapacity:40] autorelease];
     
     // 将视图控制器的默认主视图替换为PullingRefreshTableView
-    _refreshView = [[[PullingRefreshTableView alloc] initWithFrame:self.view.frame pullingDelegate:self] autorelease];
+    self.refreshView = [[[PullingRefreshTableView alloc] initWithFrame:self.view.frame pullingDelegate:self] autorelease];
+    [_refreshView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView = _refreshView;
     _refreshView.delegate = self;
     _refreshView.dataSource = self;
+    // 设置背景色
+    UIImage* img = [UIImage imageNamed:@"main_background.png"];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:img]];
     
     // 第一次进入刷新数据
     if (self.nPage == 0) {
@@ -85,17 +91,28 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     QiuShi* qs = [_arrDataSource objectAtIndex:indexPath.row];
 //    NSLog(@"qs in cell = %@", [qs description]);
-    cell.textLabel.text = qs.strAuthor;
+    if ((qs.strAuthor != nil) && (![qs.strAuthor isEqualToString:@""])) {
+        cell.lblAuthor.text = qs.strAuthor;
+    }
     
+    cell.lblContent.text = qs.strContent;
+    
+    [cell resizeCellHeight];
     return cell;
+}
+
+
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self getCellHeightWithIndexPath:indexPath];
 }
 
 /*
@@ -318,5 +335,22 @@
     }
 }
 
+
+//
+- (CGFloat)getCellHeightWithIndexPath:(NSIndexPath* )ip {
+    CGFloat contentWidth = 280;
+    UIFont* font = [UIFont fontWithName:@"Arial" size:14];
+    QiuShi* qs = [_arrDataSource objectAtIndex:ip.row];
+    CGSize size = [qs.strContent sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 220) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGFloat rtnHeight = 0;
+//    if ((qs.strSmallImageURL == nil) || ([qs.strSmallImageURL isEqualToString:@""])) {
+        rtnHeight = size.height + 110;
+//    }
+//    else {
+//        rtnHeight = size.height + 190;
+//    }
+    
+    return rtnHeight;
+}
 
 @end

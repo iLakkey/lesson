@@ -15,6 +15,8 @@
     #import "PPRevealSideViewController.h"
     #import "ASIHttpRequest.h"
     #import "ASIDownloadCache.h"
+    #import "EGOImageView.h"
+    #import "EGOImageButton.h"
 #endif
 
 

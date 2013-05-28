@@ -1322,7 +1322,7 @@ static const CGFloat MAX_TRIGGER_OFFSET = 100.0;
     }
     else // we use the bounce animation
     {
-        PPRSLog(@"****** No controller to push ****** Think to preload controller ! ******");
+//        PPRSLog(@"****** No controller to push ****** Think to preload controller ! ******");
         [self pushOldViewControllerOnDirection:_currentPanDirection animated:YES completion:nil];
         // little trick to cancel the gesture. Otherwise, as long as we pan, we continue to pass here ...
         panGesture.enabled = NO;
