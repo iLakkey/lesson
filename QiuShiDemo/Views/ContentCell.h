@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class QiuShi;
+
 @interface ContentCell : UITableViewCell
 
 @property (nonatomic, strong) EGOImageButton*   imgbtnQiuShi;      // 糗事图片
@@ -24,7 +26,10 @@
 @property (nonatomic, strong) UIButton*         btnUnhappy;     // 踩按钮
 @property (nonatomic, strong) UIButton*         btnFavorite;    // 收藏按钮
 
-// 
+//
+- (void)configWithQiuShi:(QiuShi* )qs;
+
+//
 - (void)resizeCellHeight;
 
 @end

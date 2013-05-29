@@ -31,8 +31,9 @@
         
         id image = [dic objectForKey:@"image"];
         if ((NSNull* )image != [NSNull null]) {
-            self.strSmallImageURL = SmallImageURLString(_strId, image);
-            self.strMediumImageURL = MidiumImageURLString(_strId, image);
+            NSString* strSubId = [_strId substringWithRange:NSMakeRange(0, 4)];
+            self.strSmallImageURL = SmallImageURLString(strSubId, _strId, image);
+            self.strMediumImageURL = MidiumImageURLString(strSubId, _strId, image);
         }
         
         NSDictionary* dicVote = [dic objectForKey:@"votes"];

@@ -90,7 +90,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"ContentCell";
     ContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
@@ -99,13 +99,7 @@
     }
     
     QiuShi* qs = [_arrDataSource objectAtIndex:indexPath.row];
-//    NSLog(@"qs in cell = %@", [qs description]);
-    if ((qs.strAuthor != nil) && (![qs.strAuthor isEqualToString:@""])) {
-        cell.lblAuthor.text = qs.strAuthor;
-    }
-    
-    cell.lblContent.text = qs.strContent;
-    
+    [cell configWithQiuShi:qs];
     [cell resizeCellHeight];
     return cell;
 }
@@ -184,6 +178,7 @@
     /* 下面的方法调用最终会调用pullingTableViewDidStartRefreshing刷新或pullingTableViewDidStartLoading加载 */
     [_refreshView tableViewDidEndDragging:scrollView];
 }
+
 
 #pragma mark - PullingRefreshTableView Delegate
 // 下拉时回调的方法
@@ -343,12 +338,12 @@
     QiuShi* qs = [_arrDataSource objectAtIndex:ip.row];
     CGSize size = [qs.strContent sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 220) lineBreakMode:NSLineBreakByTruncatingTail];
     CGFloat rtnHeight = 0;
-//    if ((qs.strSmallImageURL == nil) || ([qs.strSmallImageURL isEqualToString:@""])) {
-        rtnHeight = size.height + 110;
-//    }
-//    else {
-//        rtnHeight = size.height + 190;
-//    }
+    if ((qs.strSmallImageURL == nil) || ([qs.strSmallImageURL isEqualToString:@""])) {
+        rtnHeight = size.height + 120;
+    }
+    else {
+        rtnHeight = size.height + 250;
+    }
     
     return rtnHeight;
 }

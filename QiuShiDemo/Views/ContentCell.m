@@ -7,6 +7,8 @@
 //
 
 #import "ContentCell.h"
+#import "QiuShi.h"
+
 
 @interface ContentCell () <EGOImageButtonDelegate>
 
@@ -56,7 +58,7 @@
         [_lblContent release];
         
         //
-        self.imgbtnQiuShi = [[[EGOImageButton alloc] initWithPlaceholderImage:[UIImage imageNamed:@"thumb_avatar.png"] delegate:self] autorelease];
+        self.imgbtnQiuShi = [[[EGOImageButton alloc] initWithPlaceholderImage:[UIImage imageNamed:@"thumb_pic.png"] delegate:self] autorelease];
         [_imgbtnQiuShi setFrame:CGRectZero];
         [_imgbtnQiuShi addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_imgbtnQiuShi];
@@ -72,6 +74,12 @@
         [_lblAuthor release];
         
         //
+        self.imgvwAvatar = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thumb_avatar.png"]] autorelease];
+        [_imgvwAvatar setFrame:CGRectMake(15, 5, 24, 24)];
+        [self addSubview:_imgvwAvatar];
+        [_imgvwAvatar release];
+        
+        //
         self.imgvwFooter = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block_foot_background.png"]] autorelease];
         [_imgvwFooter setFrame:CGRectMake(0, _lblContent.frame.size.height, 320, 15)];
         [self addSubview:_imgvwFooter];
@@ -79,7 +87,7 @@
         
         //
         self.btnSmile = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_btnSmile setFrame:CGRectMake(10, _lblContent.frame.size.height - 30, 70, 44)];
+        [_btnSmile setFrame:CGRectMake(15, _lblContent.frame.size.height - 30, 70, 44)];
         [_btnSmile setBackgroundImage:[UIImage imageNamed:@"button_vote_enable.png"] forState:UIControlStateNormal];
         [_btnSmile setBackgroundImage:[UIImage imageNamed:@"button_vote_active.png"] forState:UIControlStateHighlighted];
         // 图片位置从居中偏左15个像素
@@ -98,7 +106,7 @@
         
         //
         self.btnUnhappy = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_btnUnhappy setFrame:CGRectMake(100, _lblContent.frame.size.height - 30, 70, 44)];
+        [_btnUnhappy setFrame:CGRectMake(105, _lblContent.frame.size.height - 30, 70, 44)];
         [_btnUnhappy setBackgroundImage:[UIImage imageNamed:@"button_vote_enable.png"] forState:UIControlStateNormal];
         [_btnUnhappy setBackgroundImage:[UIImage imageNamed:@"button_vote_active.png"] forState:UIControlStateHighlighted];
         [_btnUnhappy setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 15)];
@@ -136,6 +144,27 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Private Method
+
+- (void)configWithQiuShi:(QiuShi* )qs {
+    if ((qs.strAuthor != nil) && (![qs.strAuthor isEqualToString:@""])) {
+        _lblAuthor.text = qs.strAuthor;
+    }
+    
+    _lblContent.text = qs.strContent;
+    
+    if ((qs.strSmallImageURL == nil) || [qs.strSmallImageURL isEqualToString:@""]) {
+        self.strSmallImgURL = @"";
+        self.strMediumImgURL = @"";
+    }
+    else {
+        self.strSmallImgURL = qs.strSmallImageURL;
+        self.strMediumImgURL = qs.strMediumImageURL;
+    }
+    
+
+}
+
 
 - (void)resizeCellHeight {
     CGFloat contentWidth = 280;
@@ -147,21 +176,23 @@
     // 载入糗事图片
     if ((_strSmallImgURL == nil) || ([_strSmallImgURL isEqualToString:@""])) {
         [_imgbtnQiuShi cancelImageLoad];
-        [_imgvwBackground setFrame:CGRectMake(0, 0, 320, size.height + 90)];
+        // 为了避免表格重用时显示空的图，须重设_imgbtnQiuShi的大小
+        [_imgbtnQiuShi setFrame:CGRectMake(30, size.height, 0, 0)];
+        [_imgvwBackground setFrame:CGRectMake(0, 0, 320, size.height + 100)];
     }
     else {
         [_imgbtnQiuShi setFrame:CGRectMake(30, size.height + 70 , 72, 72)];
-        [_imgvwBackground setFrame:CGRectMake(0, 0, 320, size.height + 170)];
+        [_imgvwBackground setFrame:CGRectMake(0, 0, 320, size.height + 230)];
         [_imgbtnQiuShi setImageURL:[NSURL URLWithString:_strSmallImgURL]];
-        [self imageButtonLoadedImage:_imgbtnQiuShi];
+        [self imageButtonLoadedImage:_imgbtnQiuShi]; // 该方法会重设_imgbtnQiuShi的Frame
     }
     
     //
     CGFloat fBgEdge = _imgvwBackground.frame.size.height;
     [_imgvwFooter setFrame:CGRectMake(0, fBgEdge, 320, 15)];
-    [_btnSmile setFrame:CGRectMake(10, fBgEdge - 28, 70, 44)];
-    [_btnUnhappy setFrame:CGRectMake(100, fBgEdge - 28, 70, 44)];
-    [_btnFavorite setFrame:CGRectMake(270, fBgEdge - 28, 35, 44)];
+    [_btnSmile setFrame:CGRectMake(15, fBgEdge - 38, 70, 44)];
+    [_btnUnhappy setFrame:CGRectMake(105, fBgEdge - 38, 70, 44)];
+    [_btnFavorite setFrame:CGRectMake(270, fBgEdge - 38, 35, 44)];
 }
 
 
@@ -171,6 +202,38 @@
 
 
 - (void)voteButtonClicked:(id)sender {
+
+}
+
+
+#pragma mark - EGOImageButtonDelegate Method
+
+- (void)imageButtonLoadedImage:(EGOImageButton *)imageButton {
+    // 调整并限制imageButton的大小，宽不超过280，高不超过72
+    UIImage* image = imageButton.imageView.image;
+    
+    CGFloat fWidthScale = 1.0f;
+    CGFloat fHeightScale = 1.0f;
+    if (image.size.width > 280) {
+        fWidthScale = image.size.width / 280;
+    }
+    
+    if (image.size.height > 125) {
+        fHeightScale = image.size.height / 125;
+    }
+    
+    CGFloat scale = MAX(fWidthScale, fHeightScale);
+    CGRect rect = imageButton.frame;
+//    NSLog(@"image.size = %@", NSStringFromCGSize(image.size));
+    rect.size.width = image.size.width / scale;
+    rect.size.height = image.size.height / scale;
+    imageButton.frame = rect;
+//    NSLog(@"imageButton.frame = %@", NSStringFromCGRect(imageButton.frame));
+}
+
+
+- (void)imageButtonFailedToLoadImage:(EGOImageButton *)imageButton
+                               error:(NSError *)error {
 
 }
 
