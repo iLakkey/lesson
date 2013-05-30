@@ -8,6 +8,8 @@
 
 #import "ContentCell.h"
 #import "QiuShi.h"
+#import "PhotoViewerVC.h"
+#import "AppDelegate.h"
 
 
 @interface ContentCell () <EGOImageButtonDelegate>
@@ -162,7 +164,10 @@
         self.strMediumImgURL = qs.strMediumImageURL;
     }
     
-
+//    [_btnSmile.titleLabel setText:[NSString stringWithFormat:@"%i", qs.nSmileCount]];
+//    [_btnUnhappy.titleLabel setText:[NSString stringWithFormat:@"%i", qs.nUnhappyCount]];
+    [_btnSmile setTitle:[NSString stringWithFormat:@"%i", qs.nSmileCount] forState:UIControlStateNormal];
+    [_btnUnhappy setTitle:[NSString stringWithFormat:@"%i", qs.nUnhappyCount] forState:UIControlStateNormal];
 }
 
 
@@ -197,7 +202,15 @@
 
 
 - (void)imageButtonClicked:(id)sender {
-
+     UIWindow* window = [[UIApplication sharedApplication] keyWindow];
+    
+    PhotoViewerVC* photoVC = [[[PhotoViewerVC alloc] init] autorelease];
+    photoVC.egoImageView = [[[EGOImageView alloc] initWithImage:_imgbtnQiuShi.imageView.image] autorelease];
+    CGRect rect = [_imgbtnQiuShi convertRect:_imgbtnQiuShi.bounds toView:window];
+//    NSLog(@"rect = %@", NSStringFromCGRect(rect));
+    photoVC.rectStart = rect;
+   
+    [window.rootViewController presentViewController:photoVC animated:YES completion:nil];
 }
 
 

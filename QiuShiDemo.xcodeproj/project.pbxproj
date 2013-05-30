@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		562D2C4A17538A45003519A2 /* Ultilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D2C4917538A45003519A2 /* Ultilities.m */; };
+		564B2BA61757363900F9E17D /* PhotoViewerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 564B2BA51757363900F9E17D /* PhotoViewerVC.m */; };
 		5656E425174DEB8A001C568E /* arrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E41E174DEB8A001C568E /* arrowDown.png */; };
 		5656E426174DEB8A001C568E /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E41F174DEB8A001C568E /* arrowDown@2x.png */; };
 		5656E427174DEB8A001C568E /* arrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 5656E420174DEB8A001C568E /* arrowUp.png */; };
@@ -47,6 +48,8 @@
 /* Begin PBXFileReference section */
 		562D2C4817538A45003519A2 /* Ultilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ultilities.h; sourceTree = "<group>"; };
 		562D2C4917538A45003519A2 /* Ultilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ultilities.m; sourceTree = "<group>"; };
+		564B2BA41757363900F9E17D /* PhotoViewerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewerVC.h; sourceTree = "<group>"; };
+		564B2BA51757363900F9E17D /* PhotoViewerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewerVC.m; sourceTree = "<group>"; };
 		5656E41E174DEB8A001C568E /* arrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowDown.png; sourceTree = "<group>"; };
 		5656E41F174DEB8A001C568E /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
 		5656E420174DEB8A001C568E /* arrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowUp.png; sourceTree = "<group>"; };
@@ -198,6 +201,8 @@
 				56AC09AA174C975A00DF25BC /* MenuVC.m */,
 				56AC09AC174C989300DF25BC /* MainVC.h */,
 				56AC09AD174C989300DF25BC /* MainVC.m */,
+				564B2BA41757363900F9E17D /* PhotoViewerVC.h */,
+				564B2BA51757363900F9E17D /* PhotoViewerVC.m */,
 			);
 			name = Controllers;
 			path = QiuShiDemo/Controllers;
@@ -396,6 +401,7 @@
 				56EF1AE61752169E00B5E1A8 /* Comment.m in Sources */,
 				562D2C4A17538A45003519A2 /* Ultilities.m in Sources */,
 				56F4C6DC17543D8D000F15F9 /* ContentCell.m in Sources */,
+				564B2BA61757363900F9E17D /* PhotoViewerVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
