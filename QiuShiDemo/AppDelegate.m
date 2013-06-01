@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "RevealSideVC.h"
 #import "MainVC.h"
 #import "MenuVC.h"
 
@@ -37,13 +38,15 @@
     MenuVC* leftVC = [[[MenuVC alloc] init] autorelease];
     MainVC* mainVC = [[[MainVC alloc] init] autorelease];
     UINavigationController* centerVC = [[[UINavigationController alloc] initWithRootViewController:mainVC] autorelease];
-    PPRevealSideViewController* rsViewController = [[[PPRevealSideViewController alloc] initWithRootViewController:centerVC] autorelease];
+    UIImage* img = [UIImage imageNamed:@"head_background.png"];
+    [centerVC.navigationBar setTintColor:[UIColor colorWithPatternImage:img]];
+    
+    //
+    RevealSideVC* rsViewController = [[[RevealSideVC alloc] initWithRootViewController:centerVC] autorelease];
     // 预加载MenuVC为PPRevealSideViewController的左侧视图控制器
     [rsViewController preloadViewController:leftVC forSide:PPRevealSideDirectionLeft];
     // 设置左侧可滑动
     [rsViewController setPanInteractionsWhenClosed:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
-    // 设置弹跳方向
-    [rsViewController setDirectionsToShowBounce:PPRevealSideDirectionTop];
     
     [self.window setRootViewController:rsViewController];
     [self.window makeKeyAndVisible];
