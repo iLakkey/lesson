@@ -11,7 +11,7 @@
 @interface PhotoViewerVC : UIViewController
 
 @property (nonatomic, strong) EGOImageView* egoImageView;
-
-@property (nonatomic, assign) CGRect rectStart;
+@property (nonatomic, copy) NSString*       strImageURL;
+@property (nonatomic, assign) CGRect        rectStart;
 
 @end

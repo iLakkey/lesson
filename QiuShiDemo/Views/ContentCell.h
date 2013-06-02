@@ -15,7 +15,6 @@
 @property (nonatomic, strong) EGOImageButton*   imgbtnQiuShi;      // 糗事图片
 @property (nonatomic, copy) NSString*           strSmallImgURL; // 糗事图片的小图url
 @property (nonatomic, copy) NSString*           strMediumImgURL;// 糗事图片的大图url
-//@property (nonatomic, strong) UILabel*          lblTag;         // 糗事标签
 @property (nonatomic, strong) UILabel*          lblAuthor;      // 糗事作者
 @property (nonatomic, strong) UILabel*          lblContent;     // 糗事内容
 @property (nonatomic, strong) UIImageView*      imgvwAvatar;    // 作者头像

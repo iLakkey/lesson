@@ -11,11 +11,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface PhotoViewerVC () <UIScrollViewDelegate>
+@interface PhotoViewerVC () <UIScrollViewDelegate, EGOImageViewDelegate>
 
 #define ANIMATION_DURATION 0.6f // 动画执行的时间
 
-@property (nonatomic, copy) NSString*       strImageURL;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) UILabel*      label;
 @property (nonatomic, assign) CGPoint       potCenter; // 保存图片的初始中心位置
@@ -50,6 +49,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    // 背景色
     [self.view setBackgroundColor:[UIColor blackColor]];
     // 隐藏状态栏
     UIApplication* app = [UIApplication sharedApplication];
@@ -66,19 +67,10 @@
     
     //
 //    [_scrollView setBackgroundColor:[UIColor greenColor]];
-    [_scrollView addSubview:_egoImageView];
+    [_egoImageView setDelegate:self];
     [_egoImageView setFrame:_rectStart];
+    [_scrollView addSubview:_egoImageView];
     [_scrollView setDelegate:self];
-//    CGFloat scale = _egoImageView.frame.size.width / _egoImageView.image.size.width;
-//    NSLog(@"scale = %g", scale);
-//    [_scrollView setMinimumZoomScale:scale];
-//    [_scrollView setMaximumZoomScale:scale * 4];
-//    [_scrollView setZoomScale:scale];
-    
-    
-//    // _egoImageView加入缩放手势
-//    UIPinchGestureRecognizer* pinch = [[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)] autorelease];
-//    [_egoImageView addGestureRecognizer:pinch];
 }
 
 
@@ -117,6 +109,7 @@
     // 设置动画完成后的属性
     _egoImageView.center = [animCenter.toValue CGPointValue];
     _egoImageView.transform = [animScale.toValue CGAffineTransformValue];
+    [_egoImageView setImageURL:[NSURL URLWithString:_strImageURL]];
 }
 
 
@@ -133,6 +126,17 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+#pragma mark - EGOImageViewDelegate
+
+- (void)imageViewLoadedImage:(EGOImageView *)imageView {
+
+}
+
+
+- (void)imageViewFailedToLoadImage:(EGOImageView *)imageView
+                             error:(NSError *)error {
+    [imageView cancelImageLoad];
+}
 
 #pragma mark - UIScrollViewDelegate
 

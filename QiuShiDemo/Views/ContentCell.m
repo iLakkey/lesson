@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 
 
-@interface ContentCell () <EGOImageButtonDelegate>
+@interface ContentCell () <EGOImageButtonDelegate, EGOImageViewDelegate>
 
 @end
 
@@ -149,6 +149,7 @@
 #pragma mark - Private Method
 
 - (void)configWithQiuShi:(QiuShi* )qs {
+    
     if ((qs.strAuthor != nil) && (![qs.strAuthor isEqualToString:@""])) {
         _lblAuthor.text = qs.strAuthor;
     }
@@ -164,8 +165,6 @@
         self.strMediumImgURL = qs.strMediumImageURL;
     }
     
-//    [_btnSmile.titleLabel setText:[NSString stringWithFormat:@"%i", qs.nSmileCount]];
-//    [_btnUnhappy.titleLabel setText:[NSString stringWithFormat:@"%i", qs.nUnhappyCount]];
     [_btnSmile setTitle:[NSString stringWithFormat:@"%i", qs.nSmileCount] forState:UIControlStateNormal];
     [_btnUnhappy setTitle:[NSString stringWithFormat:@"%i", qs.nUnhappyCount] forState:UIControlStateNormal];
 }
@@ -206,6 +205,8 @@
     
     PhotoViewerVC* photoVC = [[[PhotoViewerVC alloc] init] autorelease];
     photoVC.egoImageView = [[[EGOImageView alloc] initWithImage:_imgbtnQiuShi.imageView.image] autorelease];
+    photoVC.strImageURL = self.strMediumImgURL;
+    
     CGRect rect = [_imgbtnQiuShi convertRect:_imgbtnQiuShi.bounds toView:window];
 //    NSLog(@"rect = %@", NSStringFromCGRect(rect));
     photoVC.rectStart = rect;
@@ -222,6 +223,7 @@
 #pragma mark - EGOImageButtonDelegate Method
 
 - (void)imageButtonLoadedImage:(EGOImageButton *)imageButton {
+
     // 调整并限制imageButton的大小，宽不超过280，高不超过72
     UIImage* image = imageButton.imageView.image;
     
@@ -247,7 +249,15 @@
 
 - (void)imageButtonFailedToLoadImage:(EGOImageButton *)imageButton
                                error:(NSError *)error {
-
+    [imageButton cancelImageLoad];
 }
+
+#pragma mark - EGOImageViewDelegate Method
+
+- (void)imageViewFailedToLoadImage:(EGOImageView *)imageView
+                             error:(NSError *)error {
+    [imageView cancelImageLoad];
+}
+
 
 @end
